@@ -1,0 +1,75 @@
+<%- include('../partials/header', { title: issue.title }) %>
+
+<div class="page-header">
+  <div>
+    <a href="/issues" class="text-muted" style="text-decoration:none">← Back to Issues</a>
+    <h1 style="margin-top:8px"><%= issue.title %></h1>
+  </div>
+  <div class="actions">
+    <a href="/issues/<%= issue.id %>/edit" class="btn btn-warning">Edit</a>
+    <a href="/issues/<%= issue.id %>/delete" class="btn btn-danger">Delete</a>
+  </div>
+</div>
+
+<div class="card">
+  <table class="detail-table">
+    <tr>
+      <th>ID</th>
+      <td>#<%= issue.id %></td>
+    </tr>
+    <tr>
+      <th>Status</th>
+      <td>
+        <%
+          const statusClass = {
+            'To Do': 'badge-todo',
+            'In Progress': 'badge-inprog',
+            'Done': 'badge-done'
+          }[issue.status] || 'badge-todo';
+        %>
+        <span class="badge <%= statusClass %>"><%= issue.status %></span>
+      </td>
+    </tr>
+    <tr>
+      <th>Priority</th>
+      <td>
+        <%
+          const prioClass = {
+            'Low': 'badge-low',
+            'Medium': 'badge-medium',
+            'High': 'badge-high'
+          }[issue.priority] || 'badge-low';
+        %>
+        <span class="badge <%= prioClass %>"><%= issue.priority %></span>
+      </td>
+    </tr>
+    <tr>
+      <th>Assignee</th>
+      <td><%= issue.assigneeName %></td>
+    </tr>
+    <tr>
+      <th>Project</th>
+      <td><%= issue.projectName %></td>
+    </tr>
+    <tr>
+      <th>Created At</th>
+      <td><%= new Date(issue.createdAt).toLocaleString('en-GB') %></td>
+    </tr>
+    <tr>
+      <th>Due Date</th>
+      <td><%= issue.dueDate ? new Date(issue.dueDate).toLocaleDateString('en-GB') : '—' %></td>
+    </tr>
+    <% if (issue.storyPoints) { %>
+    <tr>
+      <th>Story Points</th>
+      <td><%= issue.storyPoints %> SP</td>
+    </tr>
+    <% } %>
+    <tr>
+      <th>Description</th>
+      <td><div class="description-text"><%= issue.description %></div></td>
+    </tr>
+  </table>
+</div>
+
+<%- include('../partials/footer') %>

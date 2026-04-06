@@ -1,0 +1,118 @@
+<%- include('../partials/header', { title: 'Create Issue' }) %>
+
+<div class="page-header">
+  <h1>Create Issue</h1>
+  <a href="/issues" class="btn btn-secondary">Cancel</a>
+</div>
+
+<div class="card">
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-error"><strong>Error:</strong> <%= error %></div>
+  <% } %>
+
+  <form method="POST" action="/issues/create">
+
+    <div class="form-group">
+      <label for="title">Title <span style="color:#de350b">*</span></label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= typeof formData !== 'undefined' ? formData.title || '' : '' %>"
+        placeholder="e.g. Fix login page bug"
+        required
+        minlength="3"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description <span style="color:#de350b">*</span></label>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Describe the issue in detail (min 10 characters)..."
+        required
+        minlength="10"
+      ><%= typeof formData !== 'undefined' ? formData.description || '' : '' %></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="status">Status <span style="color:#de350b">*</span></label>
+        <select id="status" name="status" required>
+          <% statuses.forEach(s => { %>
+            <option value="<%= s %>"
+              <%= (typeof formData !== 'undefined' && formData.status === s) ? 'selected' : (s === 'To Do' ? 'selected' : '') %>
+            ><%= s %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="priority">Priority <span style="color:#de350b">*</span></label>
+        <select id="priority" name="priority" required>
+          <% priorities.forEach(p => { %>
+            <option value="<%= p %>"
+              <%= (typeof formData !== 'undefined' && formData.priority === p) ? 'selected' : (p === 'Medium' ? 'selected' : '') %>
+            ><%= p %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="assigneeName">Assignee <span style="color:#de350b">*</span></label>
+        <input
+          type="text"
+          id="assigneeName"
+          name="assigneeName"
+          value="<%= typeof formData !== 'undefined' ? formData.assigneeName || '' : '' %>"
+          placeholder="e.g. John Doe"
+          required
+        >
+      </div>
+      <div class="form-group">
+        <label for="projectName">Project <span style="color:#de350b">*</span></label>
+        <input
+          type="text"
+          id="projectName"
+          name="projectName"
+          value="<%= typeof formData !== 'undefined' ? formData.projectName || '' : '' %>"
+          placeholder="e.g. Phoenix Platform"
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dueDate">Due Date</label>
+        <input
+          type="date"
+          id="dueDate"
+          name="dueDate"
+          value="<%= typeof formData !== 'undefined' ? formData.dueDate || '' : '' %>"
+        >
+      </div>
+      <div class="form-group">
+        <label for="storyPoints">Story Points</label>
+        <input
+          type="number"
+          id="storyPoints"
+          name="storyPoints"
+          value="<%= typeof formData !== 'undefined' ? formData.storyPoints || '' : '' %>"
+          placeholder="e.g. 5"
+          min="1"
+          max="100"
+        >
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Create Issue</button>
+      <a href="/issues" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>
