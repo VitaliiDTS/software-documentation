@@ -1,0 +1,65 @@
+<%- include('../partials/header', { title: 'Delete Issue' }) %>
+
+<div class="page-header">
+  <h1>Delete Issue</h1>
+</div>
+
+<div class="card" style="max-width:600px">
+  <p style="margin-bottom:16px;font-size:15px">
+    Are you sure you want to delete this issue? This action cannot be undone.
+  </p>
+
+  <table class="detail-table" style="margin-bottom:24px">
+    <tr>
+      <th>ID</th>
+      <td>#<%= issue.id %></td>
+    </tr>
+    <tr>
+      <th>Title</th>
+      <td><strong><%= issue.title %></strong></td>
+    </tr>
+    <tr>
+      <th>Status</th>
+      <td>
+        <%
+          const statusClass = {
+            'To Do': 'badge-todo',
+            'In Progress': 'badge-inprog',
+            'Done': 'badge-done'
+          }[issue.status] || 'badge-todo';
+        %>
+        <span class="badge <%= statusClass %>"><%= issue.status %></span>
+      </td>
+    </tr>
+    <tr>
+      <th>Priority</th>
+      <td>
+        <%
+          const prioClass = {
+            'Low': 'badge-low',
+            'Medium': 'badge-medium',
+            'High': 'badge-high'
+          }[issue.priority] || 'badge-low';
+        %>
+        <span class="badge <%= prioClass %>"><%= issue.priority %></span>
+      </td>
+    </tr>
+    <tr>
+      <th>Assignee</th>
+      <td><%= issue.assigneeName %></td>
+    </tr>
+    <tr>
+      <th>Project</th>
+      <td><%= issue.projectName %></td>
+    </tr>
+  </table>
+
+  <div class="form-actions" style="border-top:none;padding-top:0;margin-top:0">
+    <form method="POST" action="/issues/<%= issue.id %>/delete" style="display:inline">
+      <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    </form>
+    <a href="/issues/<%= issue.id %>" class="btn btn-secondary">Cancel</a>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

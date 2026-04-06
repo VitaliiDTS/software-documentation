@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' — Jira' : 'Jira Issue Tracker' %></title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f4f5f7;
+      color: #172b4d;
+      font-size: 14px;
+    }
+
+    header {
+      background: #0052cc;
+      color: white;
+      padding: 0 24px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .jira-logo svg { display: block; }
+
+    header span { opacity: 0.7; font-size: 13px; }
+
+    .container {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    h1 { font-size: 20px; font-weight: 600; }
+    h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+
+    .card {
+      background: white;
+      border-radius: 4px;
+      border: 1px solid #dfe1e6;
+      padding: 24px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    .btn-primary { background: #0052cc; color: white; }
+    .btn-primary:hover { background: #0065ff; }
+
+    .btn-secondary {
+      background: #f4f5f7;
+      color: #172b4d;
+      border: 1px solid #dfe1e6;
+    }
+    .btn-secondary:hover { background: #ebecf0; }
+
+    .btn-warning { background: #ff991f; color: white; }
+    .btn-warning:hover { background: #ff8b00; }
+
+    .btn-danger { background: #de350b; color: white; }
+    .btn-danger:hover { background: #bf2600; }
+
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #dfe1e6;
+    }
+
+    th {
+      background: #f4f5f7;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #5e6c84;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 2px solid #dfe1e6;
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f4f5f7;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbfc; }
+
+    .actions { display: flex; gap: 6px; }
+
+    /* Status badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-todo    { background: #dfe1e6; color: #42526e; }
+    .badge-inprog  { background: #deebff; color: #0052cc; }
+    .badge-done    { background: #e3fcef; color: #006644; }
+
+    .badge-low     { background: #e3fcef; color: #006644; }
+    .badge-medium  { background: #fff0b3; color: #974f0c; }
+    .badge-high    { background: #ffebe6; color: #bf2600; }
+
+    /* Forms */
+    .form-group { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #172b4d;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 2px solid #dfe1e6;
+      border-radius: 3px;
+      font-size: 14px;
+      color: #172b4d;
+      background: white;
+      transition: border-color 0.15s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #4c9aff;
+    }
+
+    textarea { min-height: 100px; resize: vertical; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #f4f5f7;
+    }
+
+    /* Alert */
+    .alert {
+      padding: 10px 14px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    .alert-error { background: #ffebe6; color: #bf2600; border: 1px solid #ffbdad; }
+
+    /* Detail table */
+    .detail-table { width: 100%; }
+    .detail-table th {
+      width: 200px;
+      background: #f4f5f7;
+      font-size: 13px;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      color: #5e6c84;
+      text-transform: none;
+      letter-spacing: 0;
+      border-bottom: 1px solid #dfe1e6;
+    }
+    .detail-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f4f5f7;
+    }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      margin-bottom: 16px;
+      background: white;
+      padding: 14px 16px;
+      border: 1px solid #dfe1e6;
+      border-radius: 4px;
+    }
+
+    .filter-bar .form-group { margin-bottom: 0; flex: 1; }
+    .filter-bar label { font-size: 12px; }
+
+    .description-text {
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: #344563;
+    }
+
+    .text-muted { color: #5e6c84; font-size: 13px; }
+    .mt-2 { margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/issues" class="jira-logo">
+      <!-- Jira logo SVG (official blue gradient mark) -->
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="jiraGrad1" x1="100%" y1="0%" x2="22%" y2="78%">
+            <stop offset="0%" stop-color="#2684FF"/>
+            <stop offset="100%" stop-color="#0052CC"/>
+          </linearGradient>
+          <linearGradient id="jiraGrad2" x1="0%" y1="100%" x2="78%" y2="22%">
+            <stop offset="0%" stop-color="#2684FF"/>
+            <stop offset="100%" stop-color="#0052CC"/>
+          </linearGradient>
+        </defs>
+        <!-- Top-right diamond -->
+        <path d="M11.915 1.548L6.037 7.426a1.03 1.03 0 000 1.456l4.424 4.424 1.454 1.454 5.877-5.878a1.03 1.03 0 000-1.455L12.916 1.55a.706.706 0 00-1.001-.002z" fill="url(#jiraGrad1)"/>
+        <!-- Bottom-left diamond -->
+        <path d="M6.037 11.12L.16 17a1.03 1.03 0 000 1.456l5.877 5.877a.706.706 0 001.001 0l5.878-5.877a1.03 1.03 0 000-1.456L7.492 11.12a1.03 1.03 0 00-1.455 0z" fill="url(#jiraGrad2)"/>
+      </svg>
+      Jira
+    </a>
+    <span>/ Issues</span>
+  </header>
+  <div class="container">

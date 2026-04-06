@@ -1,0 +1,92 @@
+<%- include('../partials/header', { title: 'Edit Issue' }) %>
+
+<div class="page-header">
+  <h1>Edit Issue <span class="text-muted">#<%= issue.id %></span></h1>
+  <a href="/issues/<%= issue.id %>" class="btn btn-secondary">Cancel</a>
+</div>
+
+<div class="card">
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-error"><strong>Error:</strong> <%= error %></div>
+  <% } %>
+
+  <form method="POST" action="/issues/<%= issue.id %>/edit">
+
+    <div class="form-group">
+      <label for="title">Title <span style="color:#de350b">*</span></label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= issue.title %>"
+        required
+        minlength="3"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description <span style="color:#de350b">*</span></label>
+      <textarea id="description" name="description" required minlength="10"><%= issue.description %></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="status">Status <span style="color:#de350b">*</span></label>
+        <select id="status" name="status" required>
+          <% statuses.forEach(s => { %>
+            <option value="<%= s %>" <%= issue.status === s ? 'selected' : '' %>><%= s %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="priority">Priority <span style="color:#de350b">*</span></label>
+        <select id="priority" name="priority" required>
+          <% priorities.forEach(p => { %>
+            <option value="<%= p %>" <%= issue.priority === p ? 'selected' : '' %>><%= p %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="assigneeName">Assignee <span style="color:#de350b">*</span></label>
+        <input type="text" id="assigneeName" name="assigneeName" value="<%= issue.assigneeName %>" required>
+      </div>
+      <div class="form-group">
+        <label for="projectName">Project <span style="color:#de350b">*</span></label>
+        <input type="text" id="projectName" name="projectName" value="<%= issue.projectName %>" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dueDate">Due Date</label>
+        <input
+          type="date"
+          id="dueDate"
+          name="dueDate"
+          value="<%= issue.dueDate ? new Date(issue.dueDate).toISOString().split('T')[0] : '' %>"
+        >
+      </div>
+      <div class="form-group">
+        <label for="storyPoints">Story Points</label>
+        <input
+          type="number"
+          id="storyPoints"
+          name="storyPoints"
+          value="<%= issue.storyPoints || '' %>"
+          min="1"
+          max="100"
+        >
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a href="/issues/<%= issue.id %>" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>
