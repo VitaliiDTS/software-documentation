@@ -1,0 +1,12 @@
+{
+  "name": "software-documentation",
+  "version": "1.0.0",
+  "description": "Jira Issue Management — Lab assignments",
+  "scripts": {
+    "lab4": "node lab4/index.js",
+    "lab4:kafka": "cross-env OUTPUT_TYPE=kafka node lab4/index.js"
+  },
+  "dependencies": {
+    "dotenv": "*"
+  }
+}
