@@ -1,0 +1,90 @@
+[
+  {
+    "id": "PHXP-101",
+    "title": "Implement OAuth2 login flow",
+    "description": "Add OAuth2 authentication support for GitHub and Google providers. Must handle token refresh and revocation.",
+    "status": "In Progress",
+    "priority": "High",
+    "assignee": "john.doe",
+    "projectKey": "PHXP",
+    "storyPoints": 8,
+    "createdAt": "2024-03-01T09:00:00Z"
+  },
+  {
+    "id": "PHXP-102",
+    "title": "Fix pagination bug on Issues list page",
+    "description": "When navigating to page 3+, the offset calculation is off by one. Root cause: zero-indexed offset not aligned with UI page numbers.",
+    "status": "To Do",
+    "priority": "Medium",
+    "assignee": "jane.smith",
+    "projectKey": "PHXP",
+    "storyPoints": 3,
+    "createdAt": "2024-03-02T10:30:00Z"
+  },
+  {
+    "id": "PHXP-103",
+    "title": "Add bulk status update endpoint",
+    "description": "REST endpoint to update status on multiple issues in one request. Accepts array of issue IDs and target status.",
+    "status": "To Do",
+    "priority": "Medium",
+    "assignee": "alice.wang",
+    "projectKey": "PHXP",
+    "storyPoints": 5,
+    "createdAt": "2024-03-03T08:15:00Z"
+  },
+  {
+    "id": "ATLS-201",
+    "title": "Integrate Slack notifications for critical issues",
+    "description": "When an issue with priority 'Critical' is created or its status changes, send a Slack notification to the #alerts channel.",
+    "status": "Done",
+    "priority": "High",
+    "assignee": "bob.taylor",
+    "projectKey": "ATLS",
+    "storyPoints": 5,
+    "createdAt": "2024-02-20T11:00:00Z"
+  },
+  {
+    "id": "ATLS-202",
+    "title": "Database migration: add storyPoints column",
+    "description": "Migrate existing issues table to include nullable storyPoints integer column. Provide rollback script.",
+    "status": "Done",
+    "priority": "Low",
+    "assignee": "carol.jones",
+    "projectKey": "ATLS",
+    "storyPoints": 2,
+    "createdAt": "2024-02-22T14:00:00Z"
+  },
+  {
+    "id": "ATLS-203",
+    "title": "Write integration tests for IssueService",
+    "description": "Cover create, update, delete, and filter scenarios. Use real SQLite in-memory database for integration tests.",
+    "status": "In Progress",
+    "priority": "Medium",
+    "assignee": "john.doe",
+    "projectKey": "ATLS",
+    "storyPoints": 5,
+    "createdAt": "2024-03-04T09:45:00Z"
+  },
+  {
+    "id": "PHXP-104",
+    "title": "Performance: add index on status column",
+    "description": "Issue list queries are slow under load. Adding a B-tree index on the status column should reduce query time from ~200ms to ~10ms.",
+    "status": "To Do",
+    "priority": "High",
+    "assignee": "alice.wang",
+    "projectKey": "PHXP",
+    "storyPoints": 1,
+    "createdAt": "2024-03-05T13:20:00Z"
+  },
+  {
+    "id": "ATLS-204",
+    "title": "UI: dark mode support",
+    "description": "Add CSS variable-based theming with a toggle switch in the header. Persist user preference in localStorage.",
+    "status": "To Do",
+    "priority": "Low",
+    "assignee": "jane.smith",
+    "projectKey": "ATLS",
+    "storyPoints": 3,
+    "createdAt": "2024-03-06T10:00:00Z"
+  }
+]
